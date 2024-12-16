@@ -15,7 +15,7 @@ public class binarysearch {
 	
 	public static void main(String[] args) {
 		
-		binarysort b = new binarysort();
+		binarysearch b = new binarysearch();
 		int[] i = new int[] {1,2,3,4,5,6,7,8};
 		int max = 8;
 		int min = 1;

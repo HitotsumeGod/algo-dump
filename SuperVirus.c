@@ -26,9 +26,7 @@ int main() {
 	snprintf(comstring, sizeof(comstring), "gcc -o %d %s", i, title);
 	system(comstring);
 	snprintf(comstring, sizeof(comstring), "./%d", i);
-	sleep(1);
-	system("rm *.c");
-	sleep(1);
+	sleep(2);
 	system(comstring);
 	return 0;
 

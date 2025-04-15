@@ -1,6 +1,10 @@
 #ifndef __TREES_H__
 #define __TREES_H__
 
+#include <math.h>
+
+#define COUNTLEAVES(d, c) (c * (pow(c, d) - 1)) / (c - 1)
+
 struct TreeNode {
 	void *val;
 	struct TreeNode *parent;

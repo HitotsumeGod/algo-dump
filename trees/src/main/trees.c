@@ -30,7 +30,6 @@ TreeNode *mktnode(void *v, TreeNode *p, int ch) {
 	node -> val = v;
 	node -> parent = p;
 	node -> children = children;
-	//printf("%c", *((char *) node -> val));
 	return node;
 
 }

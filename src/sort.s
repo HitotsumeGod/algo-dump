@@ -1,8 +1,10 @@
 section		.data
-	vals	dw 5, 4, 3, 2, 3
+	vals	dw 5, 2, 3, 4, 5
 section		.text
 global 		_start
 _start:
+	mov	bl, 3
+upper:
 	mov	edi, vals
 	mov	cl, 5
 loop:
@@ -16,6 +18,8 @@ skip:
 	add	edi, 2
 	dec	cl
 	jnz	loop
+	dec	bl
+	jnz	upper
 exit:
 	mov	al, 60
 	mov	dil, 0

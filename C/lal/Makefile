@@ -3,9 +3,10 @@ DBG=valgrind
 SRC=src/main
 DEPS=src/headers
 BUILD=build
+SRS= $(SRC)/pilot.c $(SRC)/mk_rmatrix.c $(SRC)/free_rmatrix.c
 
-$(BUILD)/pilot: $(SRC)/pilot.c $(SRC)/mk_rmatrix.c $(SRC)/free_rmatrix $(BUILD)
-	$(CC) -o $@ $(SRC)/pilot.c $(SRC)/mk_rmatrix.c $(SRC)/free_rmatrix -I $(DEPS) -g
+$(BUILD)/pilot: $(SRS) $(BUILD) $(DEPS)
+	$(CC) -o $@ $(SRS) -I $(DEPS) -g
 $(BUILD):
 	if ! [ -d $@ ]; then 	\
 		mkdir $@;	\
@@ -14,3 +15,4 @@ debug: $(BUILD)/pilot
 	$(DBG) --leak-check=full --show-leak-kinds=all --track-origins=yes -s $< 
 clean:
 	rm -rf $(BUILD)
+	rm -rf vgcore.*

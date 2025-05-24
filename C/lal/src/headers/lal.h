@@ -2,6 +2,7 @@
 #define __LAL_H__
 
 #include <stdint.h>
+#include <stdbool.h>
 
 #define MALLOC_ERR -2
 #define REALLOC_ERR -3
@@ -23,7 +24,9 @@ typedef struct {
 	rmatrix *matrices;
 } rmatrix_storage;
 
-extern rmatrix *mk_rmatrix(uint16_t dimensions, signed int filler);
+extern uint32_t tag_counter;
+
+extern rmatrix *mk_rmatrix(uint16_t dimensions, uint16_t size, size_t vector_size, signed int filler);
 extern rmatrix *clone_rmatrix(rmatrix *matrix);
 extern void free_rmatrix(rmatrix_storage *matrices);
 extern signed int get_matrix_sum(rmatrix_storage *matrices);
@@ -33,5 +36,7 @@ extern rmatrix *scale_matrix(signed int scalar, rmatrix *operand);
 extern rmatrix *matrix_product(rmatrix_storage *matrices);
 extern rmatrix *matrix_vector_product(rmatrix *vector, rmatrix *operand);
 extern rmatrix *invert_matrix(rmatrix *operand);
+
+void mk_dims_rec(uint16_t dimensions, uint16_t size, size_t vector_size, signed int filler, mmatrix *matrix);
 
 #endif //__LAL_H__

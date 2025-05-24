@@ -3,8 +3,11 @@
 #include "lal.h"
 
 int main(void) {
-
-	free_rmatrix(mk_rmatrix(16, 1));
+	
+	rmatrix_storage s;
+	s.size = 1;
+	s.matrices = mk_rmatrix(4, 4, 8, 1);
+	free_rmatrix(&s);
 	return 0;
 
 }

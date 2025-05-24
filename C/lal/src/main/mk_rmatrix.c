@@ -3,33 +3,41 @@
 #include <errno.h>
 #include "lal.h"
 
-rmatrix *mk_rmatrix(uint16_t dims, signed int filler) {
+uint32_t tag_counter = 0;
+
+rmatrix *mk_rmatrix(uint16_t dims, uint16_t size, size_t v_size, signed int filler) {
 
 	rmatrix *m;
 	mmatrix *mm;
-	size_t v_size = 8;
 
 	if ((m = malloc(sizeof(rmatrix))) == NULL || (m -> matrix = malloc(sizeof(mmatrix))) == NULL) {
 		errno = MALLOC_ERR;
 		return NULL;
 	}
 	m -> dimensions = dims;
-	if ((m -> matrix -> matrix_form = malloc(sizeof(mmatrix) * dims)) == NULL) {
-		errno = MALLOC_ERR;
-		return NULL;
-	}
-	mm = m -> matrix -> matrix_form;
-	for (int i = 0; i < dims; i++) {
-		if (((mm + i) -> vector_form = malloc(sizeof(signed int) * v_size)) == NULL) {
-			errno = MALLOC_ERR;
-			return NULL;
-		}
-		for (int ii = 0; ii < v_size; ii++)
-			*((mm + i) -> vector_form + ii) = filler;
-		for (int ii = 0; ii < v_size; ii++)
-			printf("%d\t", *((mm + i) -> vector_form + ii));
-		printf("\n");
-	}
+	mk_dims_rec(dims, size, v_size, filler, m -> matrix);
+	printf("Generated %d vectors within a(n) %d dimensional matrix.\n", tag_counter, dims);
 	return m;
+
+}
+
+void mk_dims_rec(uint16_t dims, uint16_t size, size_t vsz, int filler, mmatrix *m) {
+
+	if (dims == 1) {
+		if ((m -> vector_form = malloc(sizeof(signed int) * vsz)) == NULL) {
+			perror("Internal malloc err in recursive loop.");
+			exit(EXIT_FAILURE);
+		}
+		for (int i = 0; i < vsz; i++)
+			*(m -> vector_form + i) = filler;
+		++tag_counter;
+		return;
+	}
+	if ((m -> matrix_form = malloc(sizeof(mmatrix) * size)) == NULL) {
+		perror("Internal malloc err in recursive loop.");
+		exit(EXIT_FAILURE);
+	}
+	for (int i = 0; i < size; i++)
+		mk_dims_rec(dims - 1, size, vsz, filler, m -> matrix_form + i);
 
 }

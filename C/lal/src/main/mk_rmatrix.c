@@ -3,13 +3,13 @@
 #include <errno.h>
 #include "lal.h"
 
-uint32_t tag_counter = 0;
+uint32_t tag_counter;
 
 rmatrix *mk_rmatrix(uint16_t dims, uint16_t size, size_t v_size, signed int filler) {
 
 	rmatrix *m;
-	mmatrix *mm;
 
+	tag_counter = 0;
 	if ((m = malloc(sizeof(rmatrix))) == NULL || (m -> matrix = malloc(sizeof(mmatrix))) == NULL) {
 		errno = MALLOC_ERR;
 		return NULL;

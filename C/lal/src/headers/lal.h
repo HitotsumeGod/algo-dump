@@ -28,7 +28,7 @@ extern uint32_t tag_counter;
 
 extern rmatrix *mk_rmatrix(uint16_t dimensions, uint16_t size, size_t vector_size, signed int filler);
 extern rmatrix *clone_rmatrix(rmatrix *matrix);
-extern void free_rmatrix(rmatrix_storage *matrices);
+extern void free_rmatrix(uint16_t dims, uint16_t vsz, rmatrix *m);
 extern signed int get_matrix_sum(rmatrix_storage *matrices);
 extern rmatrix *add_matrices(rmatrix_storage *matrices);
 extern rmatrix *sub_matrices(rmatrix_storage *matrices);
@@ -38,5 +38,6 @@ extern rmatrix *matrix_vector_product(rmatrix *vector, rmatrix *operand);
 extern rmatrix *invert_matrix(rmatrix *operand);
 
 void mk_dims_rec(uint16_t dimensions, uint16_t size, size_t vector_size, signed int filler, mmatrix *matrix);
+mmatrix *free_mmatrix_rec(uint16_t dimensions, uint16_t size, mmatrix *matrix);
 
 #endif //__LAL_H__
